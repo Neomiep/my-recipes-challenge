@@ -18,7 +18,7 @@
                     <input type="text" id="recipe-name" class="form-control" placeholder="Recipe Name">
                 </div>
                 <div class="form-group">
-                    <input type="text" id="recipe-image" class="form-control" placeholder="Recipe Image">
+                    <input type="text" id="recipe-image" class="form-control" placeholder="Recipe Image Url">
                 </div>
 
                 <button class="btn btn-primary add-recipe" type="button">Add a Recipe</button>
@@ -30,8 +30,36 @@
 
     <div class="recipes row">
     </div>
+    <script id="recipe-template" type="text/x-handlebars-template">
+
+        {{#each recipe}}
+
+    <div class="recipe col-md-6  offset-md-3 img-fluid shadow" data-id="{{id}}">
+                    <h4 class="text-capitalize font-italic text-center">{{name}} </h4>
+                    <button class="btn btn-danger remove-recipe" type="button">Remove Button</button>
+                    <img class="recipe-img" src="{{image}}"/>
+                    <hr>
+                    <h5 class="font-italic font-bold text-center">Ingredients</h5>
+                    <div class="input-group mb-3 parent">
+                        <div class="input-group-prepend">
+                            <button class="add-ingredients input-group-text" id="basic-addon3">Add Ingredients</button>
+                        </div>
+                        <input type="text" class="form-control inputIng" id="basic-url" aria-describedby="basic-addon3">
+                        
+                    </div>
+                    <ul class="ingredients">
+                        {{#each ingredients}}
+                        <li data-id="{{id}}"> {{name}} </li>
+                         {{/each}}
+                        </ul>
+                </div>
+
+        {{/each}}
+
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
     <script src="script.js"></script>
 </body>
 
