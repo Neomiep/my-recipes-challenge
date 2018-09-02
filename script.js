@@ -18,13 +18,6 @@ var RecipeApp = function () {
         recipes.push(recipe);
     };
 
-    const _findRecipeIdIndex = function (recipeId) {
-        for (let i = 0; i < recipes.length; i++) {
-            if (recipeId == recipes[i].id) {
-                return i
-            }}
-    }
-
     var createIngredients = function (recipeId, ingredientText) {
         ingredient = {
             name: ingredientText,
@@ -35,9 +28,31 @@ var RecipeApp = function () {
         ingredientId++
     };
 
+    const _findRecipeIdIndex = function (recipeId) {
+        for (let i = 0; i < recipes.length; i++) {
+            if (recipeId == recipes[i].id) {
+                return i
+            }}
+    }
+
+    const _findIngredientIndex = function (recipeId,ingredientId) {
+        let i = _findRecipeIdIndex(recipeId)
+        for (let a = 0; a < recipes[i].ingredients.length; a++) {
+            if (ingredientId == recipes[i].ingredients[a].id) {
+                return a
+            }}
+    }
+
+
     const removeRecipe = function (recipeId) {
         let i = _findRecipeIdIndex(recipeId)
         recipes.splice(i, 1)
+    }
+
+    const removeIngredient = function (recipeId,ingredientId){
+        let i = _findRecipeIdIndex(recipeId)
+        let a =  _findIngredientIndex(recipeId,ingredientId)
+        recipes[i].ingredients.splice(a,1)
     }
 
     const renderRecipes2 = function () {
@@ -52,7 +67,8 @@ var RecipeApp = function () {
         createRecipe: createRecipe,
         renderRecipes2: renderRecipes2,
         createIngredients: createIngredients,
-        removeRecipe: removeRecipe
+        removeRecipe: removeRecipe,
+        removeIngredient:removeIngredient
     }
 };
 
@@ -76,5 +92,12 @@ $('.recipes').on('click', '.add-ingredients', function () {
 $('.recipes').on('click', '.remove-recipe', function () {
     let recipeId = $(this).closest('.recipe').data().id
     app.removeRecipe(recipeId)
+    app.renderRecipes2();
+})
+
+$('.recipes').on('click', '.remove-ingredient', function () {
+    let recipeId = $(this).closest('.recipe').data().id
+    let ingredientId = $(this).closest('.ingredient').data().id
+    app.removeIngredient(recipeId,ingredientId)
     app.renderRecipes2();
 })
